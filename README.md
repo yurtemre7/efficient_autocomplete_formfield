@@ -1,13 +1,9 @@
 # EfficientAutocompleteFormField
 
-This is a fork of this package [SimpleAutocompleteFormField](https://github.com/jifalops/simple_autocomplete_formfield), because the maintainer is no longer working on it.
+This (fork) package is deprecated, please use the better and built in `Autocomplete` Widget.
 
-I mainly upgraded this package to the latest Flutter release, Flutter 3.0.
-I also have made sure to use flutter_lints to make the package more efficient.
-I hope you can use this further!
+See the example project if you want to learn how to use it.
 
-A Flutter widget that wraps a TextFormField and assists with autocomplete functionality.
-
-[example/lib/main.dart](example/lib/main.dart)
-
-![demo.gif](demo.gif)
+Useful links: 
+- Doku: https://api.flutter.dev/flutter/material/Autocomplete-class.html
+- YouTube: https://www.youtube.com/watch?v=-Nny8kzW380

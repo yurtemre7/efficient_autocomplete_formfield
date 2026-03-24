@@ -1,3 +1,7 @@
+# [1.0.0]
+
+- BREAKING: This package has been deprecated in favor of the Flutter Autocomplete Widget, please make use of that!
+
 ## [0.3.2+1]
 
 - Format project
