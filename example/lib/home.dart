@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:efficient_autocomplete_formfield/efficient_autocomplete_formfield.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -59,6 +56,9 @@ class _HomeState extends State<Home> {
   TextEditingController abcController = TextEditingController();
   TextEditingController personController = TextEditingController();
 
+  FocusNode abcFocusNode = FocusNode();
+  FocusNode personFocusNode = FocusNode();
+
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -81,78 +81,31 @@ class _HomeState extends State<Home> {
               key: formKey,
               child: Column(
                 children: [
-                  EfficientAutocompleteFormField<String>(
-                    controller: abcController,
-                    decoration: InputDecoration(labelText: 'Select an alphabet character'),
-                    suggestionsBuilder: (context, items) {
-                      return Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: items,
-                        ),
-                      );
-                    },
-                    itemBuilder: (context, item) {
-                      if (item == null) {
-                        return const SizedBox();
-                      }
-                      return Container(
-                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                        child: Text(item),
-                      );
-                    },
-                    onSearch: (search) {
-                      var result = abc.where((element) => element.contains(search)).toList();
+                  Autocomplete<String>(
+                    textEditingController: abcController,
+                    focusNode: abcFocusNode,
+                    optionsBuilder: (search) {
+                      var result = abc
+                          .where((element) => element.contains(search.text))
+                          .toList();
                       return Future.value(result);
                     },
-                    onChanged: (value) {
-                      setState(() {
-                        currentAbc = value;
-                      });
-                    },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please type something';
-                      }
-                      if (!abc.contains(value)) {
-                        return 'Invalid alphabet character';
-                      }
-                      return null;
-                    },
-                    autovalidateMode: AutovalidateMode.always,
                   ),
                   const SizedBox(height: 20),
                   Text('Current Value: ${currentAbc ?? 'None'}'),
                   const SizedBox(height: 20),
-                  EfficientAutocompleteFormField<String>(
-                    controller: personController,
-                    decoration: InputDecoration(labelText: 'Select a person'),
-                    suggestionsBuilder: (context, items) {
-                      return Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: items,
-                        ),
-                      );
-                    },
-                    itemBuilder: (context, item) {
-                      if (item == null) {
-                        return const SizedBox();
-                      }
-                      return Container(
-                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                        child: Text(item),
-                      );
-                    },
-                    onSearch: (search) {
-                      var result = persons.where((element) => element.contains(search)).toList();
+                  Autocomplete<String>(
+                    textEditingController: personController,
+                    focusNode: personFocusNode,
+                    optionsBuilder: (search) {
+                      var result = persons
+                          .where((element) => element.contains(search.text))
+                          .toList();
                       return Future.value(result);
                     },
-                    onChanged: (value) {
+                    onSelected: (option) {
                       setState(() {
-                        currentPerson = value;
+                        currentPerson = option;
                       });
                     },
                   ),
